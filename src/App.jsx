@@ -5,9 +5,13 @@ import Footer from './components/Footer.jsx'
 import Home from './pages/Home.jsx'
 import About from './pages/About.jsx'
 import Portfolio from './pages/Portfolio.jsx'
+import ProjectDetail from './pages/ProjectDetail.jsx'
 import Blog from './pages/Blog.jsx'
+import PostDetail from './pages/PostDetail.jsx'
 import Contact from './pages/Contact.jsx'
 import NotFound from './pages/NotFound.jsx'
+
+const KNOWN_PATHS = ['/', '/about', '/contact', '/blog', '/portfolio']
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -19,7 +23,10 @@ function ScrollToTop() {
 
 function App() {
   const { pathname } = useLocation()
-  const isNotFound = !['/', '/about', '/contact', '/blog', '/portfolio'].includes(pathname)
+  const isNotFound =
+    !KNOWN_PATHS.includes(pathname) &&
+    !pathname.startsWith('/portfolio/') &&
+    !pathname.startsWith('/blog/')
 
   return (
     <div className="flex min-h-screen flex-col overflow-x-hidden bg-white">
@@ -31,7 +38,9 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<PostDetail />} />
           <Route path="/portfolio" element={<Portfolio />} />
+          <Route path="/portfolio/:slug" element={<ProjectDetail />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

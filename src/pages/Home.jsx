@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import Button from '../components/Button.jsx'
 import Reveal from '../components/Reveal.jsx'
 import Tag from '../components/Tag.jsx'
@@ -144,26 +145,28 @@ export default function Home() {
         </div>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {portfolioItems.map((p, i) => (
-            <Reveal key={p.title} delay={i * 0.07}>
+          {portfolioItems.slice(0, 6).map((p, i) => (
+            <Reveal key={p.slug} delay={i * 0.07}>
               <motion.div
                 whileHover={{ y: -6 }}
                 transition={{ duration: 0.3 }}
                 className="group overflow-hidden rounded-3xl bg-black"
               >
-                <div className="relative h-64 overflow-hidden">
-                  <img
-                    src={p.img}
-                    alt={p.title}
-                    className="h-full w-full object-cover opacity-90 transition-transform duration-500 group-hover:scale-105"
-                  />
-                  <span className="absolute left-4 top-4 rounded-pill bg-white/90 px-3 py-1 text-xs font-semibold">
-                    {p.tag}
-                  </span>
-                </div>
-                <div className="p-5">
-                  <h3 className="font-sans text-lg font-bold text-white">{p.title}</h3>
-                </div>
+                <Link to={`/portfolio/${p.slug}`}>
+                  <div className="relative h-64 overflow-hidden">
+                    <img
+                      src={p.img}
+                      alt={p.title}
+                      className="h-full w-full object-cover opacity-90 transition-transform duration-500 group-hover:scale-105"
+                    />
+                    <span className="absolute left-4 top-4 rounded-pill bg-white/90 px-3 py-1 text-xs font-semibold">
+                      {p.tag}
+                    </span>
+                  </div>
+                  <div className="p-5">
+                    <h3 className="font-sans text-lg font-bold text-white">{p.title}</h3>
+                  </div>
+                </Link>
               </motion.div>
             </Reveal>
           ))}
@@ -202,20 +205,27 @@ export default function Home() {
 
         <div className="mt-12 grid gap-6 md:grid-cols-3">
           {posts.map((post, i) => (
-            <Reveal key={post.title} delay={i * 0.1}>
-              <div className="h-full overflow-hidden rounded-3xl border border-black/10">
+            <Reveal key={post.slug} delay={i * 0.1}>
+              <Link
+                to={`/blog/${post.slug}`}
+                className="group block h-full overflow-hidden rounded-3xl border border-black/10"
+              >
                 <div className="h-48 overflow-hidden">
-                  <img src={post.img} alt={post.title} className="h-full w-full object-cover" />
+                  <img
+                    src={post.img}
+                    alt={post.title}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
                 </div>
                 <div className="p-6">
                   <p className="mb-2 text-xs font-semibold text-neutral-500">{post.date}</p>
-                  <h3 className="mb-2 font-sans text-lg font-bold leading-snug">{post.title}</h3>
+                  <h3 className="mb-2 font-sans text-lg font-bold leading-snug group-hover:text-primary">{post.title}</h3>
                   <p className="mb-4 text-sm text-neutral-600">{post.excerpt}</p>
-                  <Button to="/blog" variant="outline" className="!px-4 !py-2 text-xs">
+                  <span className="inline-flex items-center rounded-pill border border-black/15 px-4 py-2 text-xs font-semibold">
                     Read more →
-                  </Button>
+                  </span>
                 </div>
-              </div>
+              </Link>
             </Reveal>
           ))}
         </div>

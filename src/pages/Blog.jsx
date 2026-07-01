@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import Reveal from '../components/Reveal.jsx'
 import Button from '../components/Button.jsx'
 import { posts } from '../data/content.js'
@@ -23,7 +24,7 @@ export default function Blog() {
               <p className="mb-3 text-xs font-semibold text-neutral-500">{featured.date}</p>
               <h2 className="mb-3 font-sans text-2xl font-bold leading-snug md:text-3xl">{featured.title}</h2>
               <p className="mb-6 text-neutral-600">{featured.excerpt}</p>
-              <Button href="#" variant="outline" className="self-start">
+              <Button to={`/blog/${featured.slug}`} variant="outline" className="self-start">
                 Read more →
               </Button>
             </div>
@@ -35,19 +36,24 @@ export default function Blog() {
         <div className="grid gap-6 md:grid-cols-2">
           {rest.map((post, i) => (
             <Reveal key={post.title} delay={i * 0.1}>
-              <div className="flex h-full flex-col overflow-hidden rounded-3xl border border-black/10 sm:flex-row">
-                <div className="h-48 sm:h-auto sm:w-48 sm:shrink-0">
-                  <img src={post.img} alt={post.title} className="h-full w-full object-cover" />
+              <Link
+                to={`/blog/${post.slug}`}
+                className="group flex h-full flex-col overflow-hidden rounded-3xl border border-black/10 sm:flex-row"
+              >
+                <div className="h-48 sm:h-auto sm:w-48 sm:shrink-0 overflow-hidden">
+                  <img
+                    src={post.img}
+                    alt={post.title}
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
                 </div>
                 <div className="flex flex-col justify-center p-6">
                   <p className="mb-2 text-xs font-semibold text-neutral-500">{post.date}</p>
-                  <h3 className="mb-2 font-sans text-lg font-bold leading-snug">{post.title}</h3>
+                  <h3 className="mb-2 font-sans text-lg font-bold leading-snug group-hover:text-primary">{post.title}</h3>
                   <p className="mb-4 text-sm text-neutral-600">{post.excerpt}</p>
-                  <a href="#" className="text-sm font-semibold underline underline-offset-4">
-                    Read more →
-                  </a>
+                  <span className="text-sm font-semibold underline underline-offset-4">Read more →</span>
                 </div>
-              </div>
+              </Link>
             </Reveal>
           ))}
         </div>

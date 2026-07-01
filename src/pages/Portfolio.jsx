@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import Reveal from '../components/Reveal.jsx'
 import { portfolioItems } from '../data/content.js'
 
@@ -54,19 +55,21 @@ export default function Portfolio() {
               whileHover={{ y: -6 }}
               className="group overflow-hidden rounded-3xl bg-black"
             >
-              <div className="relative h-64 overflow-hidden">
-                <img
-                  src={p.img}
-                  alt={p.title}
-                  className="h-full w-full object-cover opacity-90 transition-transform duration-500 group-hover:scale-105"
-                />
-                <span className="absolute left-4 top-4 rounded-pill bg-white/90 px-3 py-1 text-xs font-semibold">
-                  {p.tag}
-                </span>
-              </div>
-              <div className="p-5">
-                <h3 className="font-sans text-lg font-bold text-white">{p.title}</h3>
-              </div>
+              <Link to={`/portfolio/${p.slug}`}>
+                <div className="relative h-64 overflow-hidden">
+                  <img
+                    src={p.img}
+                    alt={p.title}
+                    className="h-full w-full object-cover opacity-90 transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <span className="absolute left-4 top-4 rounded-pill bg-white/90 px-3 py-1 text-xs font-semibold">
+                    {p.tag}
+                  </span>
+                </div>
+                <div className="p-5">
+                  <h3 className="font-sans text-lg font-bold text-white">{p.title}</h3>
+                </div>
+              </Link>
             </motion.div>
           ))}
         </motion.div>
